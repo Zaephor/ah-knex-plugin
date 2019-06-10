@@ -2,15 +2,9 @@
   "name": "@zaephor-ah/ah-knex-plugin",
   "version": "0.0.0",
   "description": "> TODO: description",
-  "author": "eric-zadara <eric@zadarastorage.com>",
-  "homepage": "",
+  "author": "Zaephor <Zaephor@users.noreply.github.com>",
+  "homepage": "https://github.com/Zaephor/ah-plugins#readme",
   "license": "ISC",
-  "directories": {
-    ".scripts": ".scripts",
-    "config": "config",
-    "initializers": "initializers",
-    "test": "__tests__"
-  },
   "publishConfig": {
     "access": "public"
   },
@@ -21,12 +15,18 @@
   "bugs": {
     "url": "https://github.com/Zaephor/ah-plugins/issues"
   },
-  "engines": {
-    "node": ">=10.0.0"
+  "directories": {
+    ".scripts": ".scripts",
+    "config": "config",
+    "initializers": "initializers",
+    "test": "__tests__"
   },
   "scripts": {
     "postinstall": "node .scripts/postinstall.js",
     "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   },
   "peerDependencies": {
     "actionhero": ">=19.1.4"
