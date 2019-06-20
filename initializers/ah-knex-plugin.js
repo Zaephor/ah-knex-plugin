@@ -29,6 +29,8 @@ module.exports = class KnexInitializer extends Initializer {
       }
     }
     api.knex = require('knex')(config)
-    api.knex.migrate.latest([config])
+    if (config.migrations.directory) {
+      api.knex.migrate.latest([config])
+    }
   }
 }
