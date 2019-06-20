@@ -1,11 +1,10 @@
 /* eslint-env node, mocha */
-process.env.PROJECT_ROOT = path.join(require.resolve('actionhero'), '..')
-
 const path = require('path')
 const {expect} = require('chai')
 const ActionHero = require('actionhero')
 const actionhero = new ActionHero.Process()
 
+process.env.PROJECT_ROOT = path.join(require.resolve('actionhero'), '..')
 let config = require(path.join(__dirname, '..', 'config', 'ah-knex-plugin.js'))
 let environment = (process.env.NODE_ENV && config[process.env.NODE_ENV]) ? process.env.NODE_ENV : 'default'
 let api
