@@ -36,3 +36,18 @@ exports['default'] = {
     }
   }
 }
+
+exports['test'] = {
+  'ah-knex-plugin': (api) => {
+    return {
+      client: 'sqlite3',
+      useNullAsDefault: true,
+      connection: {
+        filename: './mydb.sqlite'
+      },
+      migrations: {
+        tableName: 'knex_migrations'
+      }
+    }
+  }
+}
