@@ -23,7 +23,14 @@ describe('ah-knex-plugin', () => {
 
   after(async () => { await actionhero.stop() })
 
+  it('ActionHero server launches', () => {
+    expect(api.running).to.equal(true)
+  })
+
   it('knex should be in api scope', async () => {
     expect(api.knex).to.exist
   })
+
+  it('should validate that migrations can be detected')
+  it('should validate that migrations can be run')
 })
