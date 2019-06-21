@@ -8,6 +8,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Zaephor/ah-plugins.git"
@@ -18,8 +19,7 @@
   "directories": {
     ".scripts": ".scripts",
     "config": "config",
-    "initializers": "initializers",
-    "test": "__tests__"
+    "initializers": "initializers"
   },
   "scripts": {
     "postinstall": "node .scripts/postinstall.js",
