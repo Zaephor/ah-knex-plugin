@@ -16,11 +16,12 @@
   "bugs": {
     "url": "https://github.com/Zaephor/ah-plugins/issues"
   },
-  "directories": {
-    ".scripts": ".scripts",
-    "config": "config",
-    "initializers": "initializers"
-  },
+  "files": [
+    ".index.js",
+    ".scripts",
+    "config",
+    "initializers"
+  ],
   "scripts": {
     "postinstall": "node .scripts/postinstall.js",
     "test": "echo \"Error: run tests from root\" && exit 1"
