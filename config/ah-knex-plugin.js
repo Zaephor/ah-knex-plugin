@@ -43,7 +43,7 @@ exports['test'] = {
       client: 'sqlite3',
       useNullAsDefault: true,
       connection: {
-        filename: './mydb.sqlite'
+        filename: './mydb-test.sqlite'
       },
       migrations: {
         tableName: 'knex_migrations'

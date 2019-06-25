@@ -1,4 +1,5 @@
 /* eslint-env node, mocha */
+const fs = require('fs')
 const path = require('path')
 const {expect} = require('chai')
 const ActionHero = require('actionhero')
@@ -21,7 +22,10 @@ describe('ah-knex-plugin', () => {
     api = await actionhero.start({configChanges})
   })
 
-  after(async () => { await actionhero.stop() })
+  after(async () => {
+    await actionhero.stop()
+    if (fs.existsSync(configChanges['ah-knex-plugin'].connection.filename)) { fs.unlinkSync(configChanges['ah-knex-plugin'].connection.filename) }
+  })
 
   it('ActionHero server launches', () => {
     expect(api.running).to.equal(true)
