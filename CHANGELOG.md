@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/Zaephor/ah-plugins/compare/@zaephor-ah/ah-knex-plugin@0.1.0...@zaephor-ah/ah-knex-plugin@0.1.1) (2019-06-28)
+
+
+### Bug Fixes
+
+* corrected package.json to not pack tests or other stuff ([f9fb447](https://github.com/Zaephor/ah-plugins/commit/f9fb447))
+
+
+
+
+
 # 0.1.0 (2019-06-21)
 
 
