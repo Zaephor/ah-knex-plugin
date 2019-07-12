@@ -33,7 +33,7 @@
     "actionhero": ">=19.1.4"
   },
   "dependencies": {
-    "knex": "^0.18.1"
+    "knex": "^0.19.0"
   },
   "devDependencies": {
     "actionhero": ">=19.1.4",
