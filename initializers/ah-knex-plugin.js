@@ -3,8 +3,6 @@ const { Initializer, api } = require('actionhero')
 const path = require('path')
 const fs = require('fs')
 
-const config = ((api.config && api.config['ah-knex-plugin'])) ? api.config['ah-knex-plugin'] : require(path.join(__dirname, '..', 'config', 'ah-knex-plugin.js'))[process.env.NODE_ENV || 'development']['ah-knex-plugin'](api)
-
 module.exports = class KnexInitializer extends Initializer {
   constructor () {
     super()
@@ -15,6 +13,11 @@ module.exports = class KnexInitializer extends Initializer {
   }
 
   async initialize () {
+    if (api.config && !api.config[this.name]) {
+      api.config[this.name] = require(path.join(api.config.plugins[this.name].path, 'config', this.name + '.js'))[process.env.NODE_ENV || 'default'][this.name](api)
+    }
+    const config = api.config[this.name]
+
     api.log('[' + this.loadPriority + '] ' + this.name + ': Initializing')
 
     // Find migration directories and add them to the config object
