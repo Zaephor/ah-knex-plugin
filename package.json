@@ -37,7 +37,7 @@
     "actionhero": ">=19.2.1"
   },
   "dependencies": {
-    "knex": "^0.19.0"
+    "knex": "^0.19.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
@@ -50,7 +50,7 @@
     "mocha": "latest",
     "sqlite3": "^4.0.9",
     "standard": "latest",
-    "standard-version": "^6.0.1"
+    "standard-version": "^7.0.0"
   },
   "standard": {
     "ignore": [
