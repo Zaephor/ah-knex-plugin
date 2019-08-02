@@ -1,25 +1,26 @@
 /* eslint-env node, mocha */
+/* eslint-disable no-unused-expressions */
 const fs = require('fs')
 const path = require('path')
-const {expect} = require('chai')
+const { expect } = require('chai')
 const ActionHero = require('actionhero')
 const actionhero = new ActionHero.Process()
 
 process.env.PROJECT_ROOT = path.join(require.resolve('actionhero'), '..')
-let config = require(path.join(__dirname, '..', 'config', 'ah-knex-plugin.js'))
-let environment = (process.env.NODE_ENV && config[process.env.NODE_ENV]) ? process.env.NODE_ENV : 'default'
+const config = require(path.join(__dirname, '..', 'config', 'ah-knex-plugin.js'))
+const environment = (process.env.NODE_ENV && config[process.env.NODE_ENV]) ? process.env.NODE_ENV : 'default'
 let api
 
 describe('ah-knex-plugin', () => {
-  let configChanges = {
+  const configChanges = {
     'ah-knex-plugin': config[environment]['ah-knex-plugin'](ActionHero.api),
     plugins: {
-      'ah-knex-plugin': {path: path.join(__dirname, '..')}
+      'ah-knex-plugin': { path: path.join(__dirname, '..') }
     }
   }
 
   before(async () => {
-    api = await actionhero.start({configChanges})
+    api = await actionhero.start({ configChanges })
   })
 
   after(async () => {
