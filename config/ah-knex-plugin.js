@@ -1,6 +1,6 @@
 'use strict'
 
-exports['default'] = {
+exports.default = {
   'ah-knex-plugin': (api) => {
     // Essentially standard knex connection
     return {
@@ -37,7 +37,7 @@ exports['default'] = {
   }
 }
 
-exports['test'] = {
+exports.test = {
   'ah-knex-plugin': (api) => {
     return {
       client: 'sqlite3',
