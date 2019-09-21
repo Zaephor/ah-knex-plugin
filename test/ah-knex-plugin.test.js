@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 const fs = require('fs')
 const path = require('path')
-const { expect } = require('chai')
+const {expect} = require('chai')
 const ActionHero = require('actionhero')
 const actionhero = new ActionHero.Process()
 
@@ -15,16 +15,18 @@ describe('ah-knex-plugin', () => {
   const configChanges = {
     'ah-knex-plugin': config[environment]['ah-knex-plugin'](ActionHero.api),
     plugins: {
-      'ah-knex-plugin': { path: path.join(__dirname, '..') }
+      'ah-knex-plugin': {path: path.join(__dirname, '..')}
     }
   }
 
   before(async () => {
-    api = await actionhero.start({ configChanges })
+    // configChanges['ah-knex-plugin'].migrations.directory = [path.join(configChanges.plugins['ah-knex-plugin'].path, 'migrations')]
+    api = await actionhero.start({configChanges})
   })
 
   after(async () => {
     await actionhero.stop()
+    // Cleanup sqlite3 file
     if (fs.existsSync(configChanges['ah-knex-plugin'].connection.filename)) { fs.unlinkSync(configChanges['ah-knex-plugin'].connection.filename) }
   })
 
@@ -36,6 +38,10 @@ describe('ah-knex-plugin', () => {
     expect(api.knex).to.exist
   })
 
-  it('should validate that migrations can be detected')
-  it('should validate that migrations can be run')
+  it('migration directory was detected', async () => {
+    expect(api.config['ah-knex-plugin'].migrations.directory).contains(path.join(configChanges.plugins['ah-knex-plugin'].path, 'migrations'))
+  })
+  it('migrations have run', async () => {
+    expect(await api.knex.migrate.currentVersion([configChanges['ah-knex-plugin']])).to.equal('0000')
+  })
 })

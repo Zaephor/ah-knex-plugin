@@ -20,7 +20,9 @@ module.exports = class KnexInitializer extends Initializer {
 
     api.log('[' + this.loadPriority + '] ' + this.name + ': Initializing')
 
-    // Find migration directories and add them to the config object
+    api.knex = await require('knex')(config)
+
+    // Iterate over each plugin in api.config.plugins
     for (const pluginName in api.config.plugins) {
       if (api.config.plugins[pluginName].migrations !== false) {
         const pluginPath = api.config.plugins[pluginName].path
@@ -28,12 +30,16 @@ module.exports = class KnexInitializer extends Initializer {
           if (!config.migrations) { config.migrations = {} }
           if (!config.migrations.directory) { config.migrations.directory = [] }
           config.migrations.directory.push(path.join(pluginPath, 'migrations'))
+
+          // TODO: Figure out how to change up the `knex_migrations` schema for per-plugin migrations
+          // config.migrations.directory = [path.join(pluginPath, 'migrations')]
+          // await api.knex.migrate.latest([config])
         }
       }
     }
-    api.knex = require('knex')(config)
+
     if (config.migrations.directory) {
-      api.knex.migrate.latest([config])
+      await api.knex.migrate.latest([config])
     }
   }
 }
