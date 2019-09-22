@@ -51,6 +51,7 @@ module.exports = class KnexInitializer extends Initializer {
           })
 
           // Check for any pending migrations in plugin context
+          // TODO: If redis is enabled, use api.cache.lock, if not, do something else
           if (
             (await api.knex.migrations[pluginName].pending()).length > 0 &&
             (await api.cache.lock(this.name + ':migrationActive', (1000 * 120))) === true
