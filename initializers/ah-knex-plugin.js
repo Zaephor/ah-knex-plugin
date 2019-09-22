@@ -2,6 +2,7 @@
 const { Initializer, api } = require('actionhero')
 const path = require('path')
 const fs = require('fs')
+const Umzug = require('umzug')
 
 module.exports = class KnexInitializer extends Initializer {
   constructor () {
@@ -26,20 +27,40 @@ module.exports = class KnexInitializer extends Initializer {
     for (const pluginName in api.config.plugins) {
       if (api.config.plugins[pluginName].migrations !== false) {
         const pluginPath = api.config.plugins[pluginName].path
-        if (fs.existsSync(path.join(pluginPath, 'migrations'))) {
-          if (!config.migrations) { config.migrations = {} }
-          if (!config.migrations.directory) { config.migrations.directory = [] }
-          config.migrations.directory.push(path.join(pluginPath, 'migrations'))
 
-          // TODO: Figure out how to change up the `knex_migrations` schema for per-plugin migrations
-          // config.migrations.directory = [path.join(pluginPath, 'migrations')]
-          // await api.knex.migrate.latest([config])
+        // Check if there is a migrations folder in the plugin
+        if (fs.existsSync(path.join(pluginPath, 'migrations'))) {
+          if (!api.knex.migrations) { api.knex.migrations = {} }
+
+          // Build umzug object
+          api.knex.migrations[pluginName] = new Umzug({
+            storage: 'knex-umzug',
+            storageOptions: {
+              context: pluginName,
+              connection: api.knex,
+              tableName: config.migrations.tableName || 'knex_migrations'
+            },
+            migrations: {
+              params: [
+                api.knex,
+                Promise
+              ],
+              path: path.join(pluginPath, 'migrations'),
+              pattern: /^\d+[\w-]+\.js$/
+            }
+          })
+
+          // Check for any pending migrations in plugin context
+          if (
+            (await api.knex.migrations[pluginName].pending()).length > 0 &&
+            (await api.cache.lock(this.name + ':migrationActive', (1000 * 120))) === true
+          ) {
+            api.log('[' + this.startPriority + '] ' + this.name + ': Executing pending migrations for ' + this.name)
+            await api.knex.migrations[pluginName].up()
+            await api.cache.unlock(this.name + ':migrationActive')
+          }
         }
       }
-    }
-
-    if (config.migrations.directory) {
-      await api.knex.migrate.latest([config])
     }
   }
 }

@@ -39,9 +39,9 @@ describe('ah-knex-plugin', () => {
   })
 
   it('migration directory was detected', async () => {
-    expect(api.config['ah-knex-plugin'].migrations.directory).contains(path.join(configChanges.plugins['ah-knex-plugin'].path, 'migrations'))
+    expect(api.knex.migrations['ah-knex-plugin'].options.migrations.path).contains(path.join(configChanges.plugins['ah-knex-plugin'].path, 'migrations'))
   })
   it('migrations have run', async () => {
-    expect(await api.knex.migrate.currentVersion([configChanges['ah-knex-plugin']])).to.equal('0000')
+    expect((await api.knex.migrations['ah-knex-plugin'].executed())[0].file).to.equal('0000_migrationtest.js')
   })
 })

@@ -37,7 +37,9 @@
     "actionhero": ">=19.2.2"
   },
   "dependencies": {
-    "knex": "^0.19.4"
+    "knex": "^0.19.4",
+    "knex-umzug": "^3.0.1",
+    "umzug": "^2.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
