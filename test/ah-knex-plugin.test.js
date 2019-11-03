@@ -21,6 +21,8 @@ describe('ah-knex-plugin', () => {
 
   before(async () => {
     // configChanges['ah-knex-plugin'].migrations.directory = [path.join(configChanges.plugins['ah-knex-plugin'].path, 'migrations')]
+    if (!fs.existsSync('./public')) { fs.mkdirSync('./public') }
+    if (!fs.existsSync('./public/javascript')) { fs.mkdirSync('./public/javascript') }
     api = await actionhero.start({configChanges})
   })
 
